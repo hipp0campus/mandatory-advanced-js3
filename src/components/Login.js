@@ -17,7 +17,6 @@ class Login extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleLogIn = this.handleLogIn.bind(this);
   }
 
   componentDidMount() {
@@ -34,18 +33,18 @@ class Login extends React.Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  handleLogIn(response) {
-    updateToken(response.data.token)
-  }
-
   onSubmit(e) {
     e.preventDefault();
 
     const { username, password } = this.state;
-    const callback = this.handleLogIn;
     const _ENDPOINT = '/auth';
 
-    PostAPI(username, password, callback, _ENDPOINT)
+    PostAPI(username, password, _ENDPOINT)
+      .then(response => updateToken(response.data.token))
+      .catch(err => {
+        console.log(err.response)
+        updateToken(err.response.data.token)
+      })
   }
   
   render() {

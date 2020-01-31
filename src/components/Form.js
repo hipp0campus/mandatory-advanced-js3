@@ -10,6 +10,8 @@ const Container = styled.div`
   align-items: center;
   text-align: center;
   font-family: 'Rubik', sans-serif;
+  max-width: 1170px;
+  margin: 0 auto;
 
   h1 {
     margin-bottom: 50px;
