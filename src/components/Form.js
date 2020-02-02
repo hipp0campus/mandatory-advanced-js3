@@ -115,7 +115,7 @@ const Form = (props) => {
     headerText = <h1>Sign in</h1>
   } else if (currentComponent === 'login') {
     footerText = <h3>Don't have an account? <Link to="/registration">Register here</Link></h3>
-    headerText = <h1>Welcome</h1>
+    headerText = <h1>Log in</h1>
   }
 
   return (
