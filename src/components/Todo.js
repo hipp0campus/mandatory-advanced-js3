@@ -8,7 +8,6 @@ import PostNewTodo from '../api/PostNewTodo';
 import DeleteTodo from '../api/DeleteTodo';
 
 const Container = styled.div`
-  margin-top: 70px;
   margin-bottom: 30px;
   background: #fff;
   display: flex;
@@ -16,11 +15,16 @@ const Container = styled.div`
   align-items: center;
   text-align: center;
   font-family: 'Heebo', sans-serif;
+  max-width: 900px;
+  margin: 70px auto;
 
   h1 {
     color: #57b846;
     font-weight: 400;
     letter-spacing: 1px;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-top: 15px;
   }
 
   .content {
@@ -34,7 +38,7 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
-    margin: 10px 40px;
+    margin: 15px 40px;
     padding: 10px 12px;
     color: #74749a;
     border-left: 4px solid #57b846;
@@ -98,12 +102,16 @@ class Todo extends React.Component {
       this.setState({ token })
     })
 
+    this.fetchDataForTodos()
+  }
+
+  fetchDataForTodos() {
     GetAPI(this.state.token)
-      .then(response => this.setState({ todos: response.data.todos }))
-      .catch(err => {
-        console.log(err.response);
-        updateToken(null);
-      });
+    .then(response => this.setState({ todos: response.data.todos }))
+    .catch(err => {
+      console.log(err.response);
+      updateToken(null);
+    });
   }
 
   componentWillUnmount() {
@@ -132,6 +140,11 @@ class Todo extends React.Component {
     DeleteTodo(id)
   }
 
+  componentDidUpdate(prevState) {
+    if (prevState.activeDate !== this.state.todos) {
+      this.fetchDataForTodos()
+    }
+  }
 
   render() {
     if (!this.state.token) return <Redirect to="/login" />;

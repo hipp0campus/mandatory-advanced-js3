@@ -4,6 +4,13 @@ import { Link } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import { updateToken, token$ } from './Token';
 
+const Header = styled.header`
+  height: 70px;
+  width: 100%;
+  background: rgb(22,31,20);
+  background: linear-gradient(90deg, rgba(22,31,20,1) 19%, rgba(57,103,49,1) 42%, rgba(11,45,6,1) 100%);
+`;
+
 const Container = styled.nav`
   position: sticky;
   top: 0px;
@@ -13,8 +20,6 @@ const Container = styled.nav`
   justify-content: space-between;
   font-family: 'Heebo', sans-serif;
   height: 70px;
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(87,184,70,1) 61%, rgba(0,212,255,1) 100%);
 
   .icon {
     display: flex;
@@ -22,8 +27,9 @@ const Container = styled.nav`
   }
 
   .email {
+    font-family: 'Maven Pro', sans-serif;
     margin: 0px 5px;
-    color: #C4C4C4;
+    color: #fff;
   }
 
   ul {
@@ -34,6 +40,28 @@ const Container = styled.nav`
   ul li {
     list-style: none;
     margin: 0px 20px;
+  }
+
+  a:link,
+  a:visited,
+  .logout {
+    font-family: 'Maven Pro', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    display: block;
+    height: 70px;
+    line-height: 70px;
+  }
+
+  a:hover,
+  a:active {
+    color: #57b846;
+  }
+
+  .logout:hover {
+    color: #57b846;
   }
 
   .material-icons {
@@ -47,10 +75,6 @@ const Container = styled.nav`
 
   .material-icons:last-child {
     color: #57b846;
-  }
-
-  .logout {
-    cursor: pointer;
   }
 `;
 
@@ -76,32 +100,36 @@ class Navigation extends React.Component {
   }
 
   render() {
-    let email = <i className="material-icons">star_border</i>;
+    let displayEmail = <i className="material-icons">star_border</i>;
+    let logoutBtn = null;
 
     if (this.state.decoded) {
-      email = <span className="email">{this.state.decoded.email}</span>;
+      displayEmail = <span className="email">{this.state.decoded.email}</span>;
+      logoutBtn = <li className="logout" onClick={() => updateToken(null)}>Logout</li>;
     }
 
     return (
-      <Container>
-        <div className="icon">
-          <i className="material-icons">star_border</i>
-          {email}
-          <i className="material-icons">star_border</i>
-        </div>
-        <ul>
-          <Link to="/registration">
-            <li>Register</li>
-          </Link>
-          <Link to="/login">
-            <li>Login</li>
-          </Link>
-          <Link to="/">
-            <li>Profile</li>
-          </Link>
-          <li className="logout" onClick={() => updateToken(null)}>Logout</li>
-        </ul>
-      </Container>
+      <Header>
+        <Container>
+          <div className="icon">
+            <i className="material-icons">star_border</i>
+            {displayEmail}
+            <i className="material-icons">star_border</i>
+          </div>
+          <ul>
+            <Link to="/registration">
+              <li>Register</li>
+            </Link>
+            <Link to="/login">
+              <li>Login</li>
+            </Link>
+            <Link to="/">
+              <li>Profile</li>
+            </Link>
+            {logoutBtn}
+          </ul>
+        </Container>
+      </Header>
     )
   }
 }
