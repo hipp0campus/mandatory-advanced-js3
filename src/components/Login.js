@@ -13,6 +13,7 @@ class Login extends React.Component {
       username: '',
       password: '',
       token: token$.value,
+      invalidInput: false,
     }
 
     this.onChange = this.onChange.bind(this);
@@ -43,6 +44,11 @@ class Login extends React.Component {
       .then(response => updateToken(response.data.token))
       .catch(err => {
         console.log(err.response)
+        this.setState({ 
+          password: '',
+          username: '',
+          invalidInput: true
+        })
         updateToken(err.response.data.token)
       })
   }
@@ -53,7 +59,10 @@ class Login extends React.Component {
       <Form 
         onSubmit={this.onSubmit}
         onChange={this.onChange} 
-        currentComponent={'login'} 
+        currentComponent={'login'}
+        password={this.state.password}
+        username={this.state.username}
+        invalidInput={this.state.invalidInput}
       />
     )
   }

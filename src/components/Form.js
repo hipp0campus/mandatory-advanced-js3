@@ -33,6 +33,7 @@ const Container = styled.div`
   .input-container {
     width: 350px;
     padding: 25px;
+    position: relative;
   }
 
   .input-container::after {
@@ -101,38 +102,65 @@ const Container = styled.div`
   footer a:active {
     color: #57b846;
   }
+
+  .tooltip {
+    position: absolute;
+    right: ${props => props.currentComponent === 'login' ? '62px;' : '97.5px;'}
+    top: -30px;
+    border: 2px solid #878787;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: #878787;
+    border-bottom: 0;
+    margin-left: -10px;
+    margin-bottom: -10px;
+  }
 `;
 
 const Form = (props) => {
   let footerText = null;
   let headerText = null;
-  let usernameValidation = null;
+  let inputValidation = null;
 
-  const { currentComponent, onSubmit, onChange } = props;
+  const { currentComponent, onSubmit, onChange, username, password, invalidInput } = props;
 
   if (currentComponent === 'registration') {
     footerText = <h3>Already have an account? <Link to="/login">Login here</Link></h3>
-    headerText = <h1>Sign in</h1>
+    headerText = <h1>Register</h1>
+    inputValidation = 'username already exist';
   } else if (currentComponent === 'login') {
     footerText = <h3>Don't have an account? <Link to="/registration">Register here</Link></h3>
     headerText = <h1>Log in</h1>
+    inputValidation = 'incorrect username or password';
   }
 
   return (
-    <Container>
+    <Container currentComponent={currentComponent}>
       <div className="form-container">
         {headerText}
         <img src="https://www.w3schools.com/howto/img_avatar2.png" />
-        {usernameValidation}
         <form onSubmit={onSubmit}>
           <div className="input-container">
+          {invalidInput ? <div className="tooltip">{inputValidation}</div> : null}
             <input
               onChange={onChange}
               className="input name"
               type="email"
               placeholder="Email"
               name="username"
-              />
+              value={username}
+            />
           </div>
           <div className="input-container">
             <input 
@@ -141,6 +169,7 @@ const Form = (props) => {
               type="password"
               placeholder="Password"
               name="password"
+              value={password}
             />
           </div>
           <div className="submit-container">

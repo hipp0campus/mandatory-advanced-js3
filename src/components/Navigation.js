@@ -83,7 +83,7 @@ class Navigation extends React.Component {
     super(props);
 
     this.state = {
-      decoded: '',
+      decoded: {},
     }
   }
 

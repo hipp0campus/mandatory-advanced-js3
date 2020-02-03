@@ -72,15 +72,19 @@ const Container = styled.div`
     font-size: 16px;
   }
 
-  .add {
+  .add-btn {
     position: absolute;
-    color: #57b846;
+    color: #fff;
     cursor: pointer;
-    font-size: 70px;
-    right: -35px;
+    font-size: 24px;
+    right: -30px;
     z-index: 1;
+    width: 60px;
+    height: 60px;
+    background-color: #57b846;
+    border-radius: 50%;
+    line-height: 62px;
   }
-
 `;
 
 class Todo extends React.Component {
@@ -90,7 +94,7 @@ class Todo extends React.Component {
     this.state = {
       token: token$.value,
       todos: [],
-      newTodo: ''
+      newTodo: '',
     }
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -129,7 +133,9 @@ class Todo extends React.Component {
       .catch(err => {
         console.log(err) //401
         updateToken(null); 
-      })
+      });
+
+    this.setState({ newTodo: '' })
   }
 
   onChange(e) {
@@ -156,17 +162,14 @@ class Todo extends React.Component {
           <form onSubmit={this.onSubmit}>
             <div className="input">
               <input 
+                value={this.state.newTodo}
                 onChange={this.onChange} 
                 type="text" 
                 name="newTodo"
                 minLength="1"
                 required
               />
-              <i 
-                className="material-icons add"
-                onClick={this.onSubmit}>
-                add_circle
-              </i>
+              <div className="add-btn"onClick={this.onSubmit}>+</div>
             </div>
           </form>
           {this.state.todos

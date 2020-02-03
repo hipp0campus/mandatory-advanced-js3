@@ -14,8 +14,8 @@ class Registration extends React.Component {
       username: '',
       password: '',
       token: token$.value,
-      haveRegister: false,
-      usernameAlreadyExists: false,
+      invalidInput: false,
+      redirect: false,
     }
 
     this.onChange = this.onChange.bind(this);
@@ -43,29 +43,26 @@ class Registration extends React.Component {
     const _ENDPOINT = '/register';
 
     PostAPI(username, password, _ENDPOINT)
-      .then(() => this.setState({ haveRegister: true }))
+      .then(() => this.setState({ redirect: true }))
       .catch(err => {
         console.log(err.response)
-        this.setState({ usernameAlreadyExists: true })
+        this.setState({ invalidInput: true })
       })
   }
 
   render() {
-    if (this.state.haveRegister) return <Redirect to="/login" />;
+    if (this.state.redirect) return <Redirect to="/login" />;
     if (this.state.token) return <Redirect to="/" />
-
-    let usernameValidation = null;
-    if (this.state.usernameAlreadyExists) {
-      usernameValidation = <p>a user with the given username is already registered</p>
-    }
 
     return (
       <>
-      {usernameValidation}
         <Form
           onSubmit={this.onSubmit} 
           onChange={this.onChange} 
           currentComponent={'registration'}
+          password={this.state.password}
+          username={this.state.username}
+          invalidInput={this.state.invalidInput}
         />
       </>
     )
