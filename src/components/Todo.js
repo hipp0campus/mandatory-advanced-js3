@@ -147,7 +147,7 @@ class Todo extends React.Component {
   }
 
   componentDidUpdate(prevState) {
-    if (prevState.activeDate !== this.state.todos) {
+    if (prevState.todos !== this.state.todos) {
       this.fetchDataForTodos()
     }
   }
