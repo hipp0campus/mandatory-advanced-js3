@@ -160,6 +160,7 @@ const Form = (props) => {
               placeholder="Email"
               name="username"
               value={username}
+              required
             />
           </div>
           <div className="input-container">
@@ -170,6 +171,7 @@ const Form = (props) => {
               placeholder="Password"
               name="password"
               value={password}
+              required
             />
           </div>
           <div className="submit-container">
