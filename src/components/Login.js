@@ -14,6 +14,7 @@ class Login extends React.Component {
       password: '',
       token: token$.value,
       invalidInput: false,
+      connectionError: false,
     }
 
     this.onChange = this.onChange.bind(this);
@@ -43,27 +44,36 @@ class Login extends React.Component {
     PostAPI(username, password, _ENDPOINT)
       .then(response => updateToken(response.data.token))
       .catch(err => {
-        console.log(err.response)
-        this.setState({ 
-          password: '',
-          username: '',
-          invalidInput: true
-        })
-        updateToken(err.response.data.token)
-      })
+        if (!err.response) {
+          console.log(err)
+          this.setState({ connectionError: true })
+        } else {
+          console.log(err.response)
+          this.setState({ 
+            password: '',
+            username: '',
+            invalidInput: true
+          })
+          updateToken(err.response.data.token)
+        }
+      }
+    )
   }
   
   render() {
     if (this.state.token) return <Redirect to="/" />
     return (
-      <Form 
-        onSubmit={this.onSubmit}
-        onChange={this.onChange} 
-        currentComponent={'login'}
-        password={this.state.password}
-        username={this.state.username}
-        invalidInput={this.state.invalidInput}
-      />
+      <>
+        {this.state.connectionError ? <h2>Connection Error!</h2> : null}
+        <Form 
+          onSubmit={this.onSubmit}
+          onChange={this.onChange} 
+          currentComponent={'login'}
+          password={this.state.password}
+          username={this.state.username}
+          invalidInput={this.state.invalidInput}
+        />
+      </>
     )
   }
 }

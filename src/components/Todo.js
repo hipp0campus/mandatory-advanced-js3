@@ -144,12 +144,7 @@ class Todo extends React.Component {
 
   onDelete(id) {
     DeleteTodo(id)
-  }
-
-  componentDidUpdate(prevState) {
-    if (prevState.todos !== this.state.todos) {
-      this.fetchDataForTodos()
-    }
+      .then(() => this.fetchDataForTodos())
   }
 
   render() {

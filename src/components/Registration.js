@@ -16,6 +16,7 @@ class Registration extends React.Component {
       token: token$.value,
       invalidInput: false,
       redirect: false,
+      connectionError: false,
     }
 
     this.onChange = this.onChange.bind(this);
@@ -45,8 +46,12 @@ class Registration extends React.Component {
     PostAPI(username, password, _ENDPOINT)
       .then(() => this.setState({ redirect: true }))
       .catch(err => {
-        console.log(err.response)
-        this.setState({ invalidInput: true })
+        if (!err.response) {
+          console.log(err)
+          this.setState({ connectionError: true })
+        } else {
+          this.setState({ invalidInput: true })
+        }
       })
   }
 
@@ -56,6 +61,7 @@ class Registration extends React.Component {
 
     return (
       <>
+        {this.state.connectionError ? <h2>Connection Error!</h2> : null}
         <Form
           onSubmit={this.onSubmit} 
           onChange={this.onChange} 
