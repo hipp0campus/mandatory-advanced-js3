@@ -1,68 +1,67 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Running
+Clone repository.
+Run npm install.
+Run npm start.
+Go to http://localhost:3000.
 
-In the project directory, you can run:
+## Assignment instructions
+In this exercise you will create a Todo application with user registration and user authentication. A backend server has been provided for the exercise.<br/>
 
-### `npm start`
+With this application a user will be able to create a new user, sign in and manage a list of todo items. <br/>
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The authentication will be done using JSON Web Tokens (JWT).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Backend server
+A backend for this exercise is provided at: http://3.120.96.16.3002<br/>
 
-### `npm test`
+The backend has endpoints for user registration, authentication and managing a personal todo list.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Views
 
-### `npm run build`
+The application should contain at least three different pages:
+<ul>
+  <li>A "registration page" with a form used to register a new user</li>
+  <li>A "login page" with a form used to sign in</li>
+  <li>A "todos page" with a list of todos and form to add a new todo</li>
+</ul>
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Every page should share a header which shows the email address of the currently logged in user.
+The email should be extracted from JWT token. <br/>
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+The header should also contain links to the login page, registration page and a button to sign out if the user is already signed in.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Registration page
+The registration page should contain a form with input fields for email and password.
+When the form is submitted a new user should be added using the API. <br/>
 
-### `npm run eject`
+An error message should be displayed if the API responds with an error.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Login page
+The login page should contain a form with input fields for email and password.
+When the form is submitted the client receives a JWT token.
+Save the token in localStorage so the user is still signed in if the page is refreshed.<br/>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+An error message should be displayed if the API responds with an error.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Todos page
+The todo page should fetch a list of todos from the server and display them in a list. It should be possible to delete items from the list. <br/>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This page should also contain a form with a text input field used to add new todos. </br>
 
-## Learn More
+Display error messages if the API returns an error.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Requirements
+<ul>
+  <li>The application should be an SPA written using React</li>
+  <li>It should implement correct routing</li>
+  <li>The user should stay signed in if the page is refreshed</li>
+  <li>It should contain at least three views</li>
+    <ul>
+        <li>Registration page</li>
+        <li>Login page</li>
+        <li>Todos page</li>
+    </ul>
+  <li>The email shown in the header should be extracted from the JWT token. Save only the token in localStorage</li>
+</ul>
